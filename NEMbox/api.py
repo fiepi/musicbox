@@ -546,18 +546,18 @@ class NetEase:
             if csrf == "":
                 return False
             action += csrf
-            print("hahah")
+            # print("hahah")
             req = {
                 "ids": [song['song_id']],
                 "br": music['br'],
                 "csrf_token": csrf
             }
-            print("hahah")
+            # print("hahah")
             page = self.session.post(action, data=encrypted_request(req), headers=self.header,
                                      timeout=default_timeout)
             result = json.loads(page.text)["data"][0]
             print page.text
-            print("hahah")
+            # print("hahah")
             # song["mp3_url"] = result["url"]
             # song["url_expired_time"] = time.time() + result['expi']
             # song["quality"] = quality
