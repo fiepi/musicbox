@@ -515,11 +515,60 @@ class NetEase:
         except:
             return []
 
+    def get_url_encrypt(self, song):
+        quality = Config().get_item("music_quality")
+        if song['version'] != 2:
+            return None
+        if song['h'] and quality <= 0:
+            music = song['h']
+            quality = 'HD'
+        elif song['m'] and quality <= 1:
+            music = song['m']
+            quality = 'MD'
+        elif song['l'] and quality <= 2:
+            music = song['l']
+            quality = 'LD'
+        else:
+            music = {
+                'br': 320000
+            }
+            quality = 'Unknown'
+        print("hahah")
+        try:
+            action = 'http://music.163.com/weapi/song/enhance/player/url?csrf_token='
+            self.session.cookies.load()
+            csrf = ""
+            for cookie in self.session.cookies:
+                if cookie.name == "__csrf":
+                    csrf = cookie.value
+            if csrf == "":
+                return False
+            action += csrf
+            print("hahah")
+            req = {
+                "ids": [song['song_id']],
+                "br": music['br'],
+                "csrf_token": csrf
+            }
+            print("hahah")
+            page = self.session.post(action, data=encrypted_request(req), headers=self.header,
+                                     timeout=default_timeout)
+            result = json.loads(page.text)["data"][0]
+            print page.text
+            print("hahah")
+            # song["mp3_url"] = result["url"]
+            # song["url_expired_time"] = time.time() + result['expi']
+            # song["quality"] = quality
+            url = result["url"]
+            return url, quality
+        except:
+            exit(0)
+
     def dig_info(self, data, dig_type):
         temp = []
         if dig_type == 'songs' or dig_type == 'fmsongs':
             for i in range(0, len(data)):
-                url, quality = geturl(data[i])
+                url, quality = get_url_encrypt(data[i])
 
                 if data[i]['album'] != None:
                     album_name = data[i]['album']['name']
@@ -577,7 +626,7 @@ class NetEase:
 
 
         elif dig_type == 'channels':
-            url, quality = geturl(data)
+            url, quality = get_url_encrypt(data)
             channel_info = {
                 'song_id': data['id'],
                 'song_name': data['name'],
