@@ -568,7 +568,7 @@ class NetEase:
         temp = []
         if dig_type == 'songs' or dig_type == 'fmsongs':
             for i in range(0, len(data)):
-                url, quality = get_url_encrypt(data[i])
+                url, quality = self.get_url_encrypt(data[i])
 
                 if data[i]['album'] != None:
                     album_name = data[i]['album']['name']
@@ -626,7 +626,7 @@ class NetEase:
 
 
         elif dig_type == 'channels':
-            url, quality = get_url_encrypt(data)
+            url, quality = self.get_url_encrypt(data)
             channel_info = {
                 'song_id': data['id'],
                 'song_name': data['name'],
