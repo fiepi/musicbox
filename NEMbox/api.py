@@ -516,21 +516,25 @@ class NetEase:
             return []
 
     def get_url_encrypt(self, song):
-        quality = Config().get_item("music_quality")
-        if song['hMusic'] and quality <= 0:
-            music = song['hMusic']
-            quality = 'HD'
-        elif song['mMusic'] and quality <= 1:
-            music = song['mMusic']
-            quality = 'MD'
-        elif song['lMusic'] and quality <= 2:
-            music = song['lMusic']
-            quality = 'LD'
-        else:
-            music = {
-                'br': 320000
-            }
-            quality = 'Unknown'
+        # quality = Config().get_item("music_quality")
+        # if song['hMusic'] and quality <= 0:
+        #     music = song['hMusic']
+        #     quality = 'HD'
+        # elif song['mMusic'] and quality <= 1:
+        #     music = song['mMusic']
+        #     quality = 'MD'
+        # elif song['lMusic'] and quality <= 2:
+        #     music = song['lMusic']
+        #     quality = 'LD'
+        # else:
+        #     music = {
+        #         'br': 320000
+        #     }
+        #     quality = 'Unknown'
+        music = {
+            'br': 128000
+        }
+        quality = 'LD'
         print("hahah")
         try:
             action = 'http://music.163.com/weapi/song/enhance/player/url?csrf_token='
