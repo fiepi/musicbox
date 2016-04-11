@@ -517,16 +517,14 @@ class NetEase:
 
     def get_url_encrypt(self, song):
         quality = Config().get_item("music_quality")
-        if song['version'] != 2:
-            return None
-        if song['h'] and quality <= 0:
-            music = song['h']
+        if song['hMusic'] and quality <= 0:
+            music = song['hMusic']
             quality = 'HD'
-        elif song['m'] and quality <= 1:
-            music = song['m']
+        elif song['mMusic'] and quality <= 1:
+            music = song['mMusic']
             quality = 'MD'
-        elif song['l'] and quality <= 2:
-            music = song['l']
+        elif song['lMusic'] and quality <= 2:
+            music = song['lMusic']
             quality = 'LD'
         else:
             music = {
